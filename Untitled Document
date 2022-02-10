@@ -1,0 +1,78 @@
+docker exec -it docker-laravel-app bash
+
+docker exec -it docker-laravel-app php artisan migrate
+
+docker exec -it docker-laravel-app composer require spatie/image
+
+docker exec -it docker-laravel-app php artisan storage:link
+docker exec -it docker-laravel-app composer require yajra/laravel-datatables-oracle
+docker exec -it docker-laravel-app User::factory()->count(5)->create()
+
+
+database:password:password
+--------------------------
+localhost/adminer.php
+---------------------
+
+***sudo service apache2 stop
+----------------------------
+
+
+
+
+1.laravel route model binding ->command,
+----------------------------------------
+
+2.php artisan make:controller RoutemodelBindingController --resource --model=modelname;
+
+
+https://tighten.co/blog/the-magic-of-laravel-macros/
+
+kono docar container on thakle off kore dibe:docker stop $(docker ps -q)
+
+https://rapidapi.com/collection/popular-apis
+
+
+
+git permission token
+--------------------------------------------------------
+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
+
+
+linux er read write permission er jonno: kisu coppy and pest korte chaile:
+------------------------------------------------------------------------
+  sudo chmod -R 777 .
+
+
+
+fresh project a dockerize korar procedural:
+---------------------------------------------------------------------------
+1.docker folder,docker compose yml file,start file tinta coppy kore ante hobe 
+2.docker folder er vitore database data dir folder er vitorer data delete kore dite hobe
+3.tar por oy tinta file a edit korte hobe
+4.database er access korar jonno public folder vitore adminer.php file ta coppy and pest korte hobe
+5..env example a edit korte hobe ,sey onujai .env create hobe 
+
+DB_CONNECTION=mysql
+DB_HOST=host.docker.internal
+DB_PORT=3306
+DB_DATABASE=nameartists_test_local_db
+DB_USERNAME=root
+DB_PASSWORD=password
+6.public folder er vitore adminer.php file create kore coppy pest korte hobe
+
+
+
+docker container off korar jonno:
+------------------------------------------------------------------------------------
+docker stop $(docker ps -q)
+
+
+for soft delete
+--------------------------
+https://web-tuts.com/laravel-8-soft-delete-example/
+
+
+
+
+
