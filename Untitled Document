@@ -41,6 +41,10 @@ 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
 new permission token
 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
 
+last update new permission token
+
+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
+
 
 linux er read write permission er jonno: kisu coppy and pest korte chaile:
 ------------------------------------------------------------------------
@@ -74,6 +78,23 @@ docker stop $(docker ps -q)
 for soft delete
 --------------------------
 https://web-tuts.com/laravel-8-soft-delete-example/
+
+------------------------------------------------
+
+git a kono change reset korte chaile
+
+git reset --hard HEAD
+
+kono specific version a shif houar jonno
+git reset --hard akhabe git er position id ta bosbe
+
+
+--------------------------------------------
+
+git pull origin main ->for update local code
+
+
+
 
 
 
