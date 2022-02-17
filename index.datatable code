@@ -1,0 +1,297 @@
+@extends('layouts.admin')
+@section('content')
+
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.role.title_singular') }}
+        </div>
+        <div class="card-body">
+            <nav class="navbar navbar-light bg-light">
+                <form class="form-inline" id="search-form">
+                    <div class="col-md-lg">
+                  <label for="exampleFormControlSelect1">Alphabetic</label>
+                  <select class="form-control" id="alphabetic" name="alphabetic">
+                    <option value="any">Any</option>
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
+
+                   
+                  </select>
+                </div>
+                <div class="col-md-lg">
+                    <label for="exampleFormControlSelect1">Number</label>
+                    <select class="form-control" id="number" name="number">
+                      <option value="any">Any</option>
+                      <option value=1>Yes</option>
+                      <option value=0>No</option>
+  
+                     
+                    </select>
+                  </div>
+                <div class="col-md-lg">
+                  <label for="exampleFormControlSelect1">Dash</label>
+                  <select class="form-control" id="dash" name="dash">
+                    <option >Any</option>
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
+
+                    
+                  </select>
+                </div>
+
+
+               
+                    <div class="form-group col-md-2">
+                        <label for="exampleFormControlSelect1">Min length</label>
+                      <input type="text" class="form-control" id="min_length" name="min_length" placeholder="Enter Min length">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="inputPassword4">Max length</label>
+                      <input type="text" class="form-control" id="max_length" name="max_length" placeholder="Enter Max length">
+                    </div>
+                 
+                  
+
+               
+                <div class="col-md-lg">
+                    <label for="exampleFormControlSelect1">Extensions</label>
+                    <select class="form-control" id="extension" name="extension">
+                        <option value="null">any</option>
+                        @foreach ($extensions as $extension)
+                        <option value="{{$extension}}">{{$extension}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+
+                  <div class="col-md-lg">
+                    <label for="exampleFormControlSelect1">Source</label>
+                    <select class="form-control" id="source" name="source">
+                        <option value="null">any</option>
+                        @foreach ($sources as $source)
+                        <option value="{{$source}}">{{$source}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+
+                 
+                 
+                
+                  <div class="col-md-lg">
+                    <label for="exampleFormControlSelect1">Keyword Search</label>
+                    <select class="form-control" id="keyword_position" name="keyword_position">
+                      <option value="anywhere">Anywhere</option>
+                      <option value="beginswith">Beginswith</option>
+                      <option value="endswith">Endswith</option>
+  
+                      
+                    </select>
+                    <input class="form-control mr-sm-2" type="text" name="keyword" id="keyword" placeholder="Keyword" aria-label="Search">
+                  </div>
+                  
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                  <button class="btn btn-outline-info my-2 my-sm-0" type="button" onclick="select_all()">Select All</button>
+                  <button class="btn btn-outline-info my-2 my-sm-0" type="button" id="deselect_all">Delect All</button>
+
+                 
+                </form>
+              </nav>
+              <form id="fromvalidation" method="post" action="">
+                  @csrf
+              
+                  <button type="submit" class="btn btn-info pd-x-20">delete</button>
+            <table class="table" id="data_table">
+                
+            
+                <thead>
+                    <tr>
+                        
+                      <th></th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Domain</th>
+                        <th scope="col">Full length</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Name length</th>
+                        <th scope="col">Ext</th>
+                        <th scope="col">Source</th>
+                        <th scope="col">Drop date</th>
+
+
+                        {{-- <th scope="col">is_alphabetic</th>
+                        <th scope="col">is_numeric</th>
+                        <th scope="col">is_alphanumeric</th>
+                        <th scope="col">has dash</th> --}}
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </form>
+        </div>
+    </div>
+
+    {{-- script for fetch data with datatables --}}
+    <script type="text/javascript">
+        $(function() {
+            var oTable = $('#data_table').DataTable({
+                "lengthMenu": [ 10, 25, 50, 100, 250, 500],
+                "pageLength":25,
+              
+                order: [
+                    [0, 'desc']
+             
+                ],
+                dom: 'lBfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5',
+                ],
+               
+               
+                processing: true,
+                serverSide: true,
+                ajax:{
+                url:"{{route('expired_domain.index')}}",
+                data: function (d) {
+                d.keyword = $('#keyword').val();
+                d.number = $('#number').val();
+                d.dash = $('#dash').val();
+                d.extension = $('#extension').val();
+                d.alphabetic = $('#alphabetic').val();
+                d.min_length = $('#min_length').val();
+                d.max_length = $('#max_length').val();
+                d.source = $('#source').val();
+                d.keyword_position = $('#keyword_position').val();
+               
+
+            }
+                },
+                
+                columns: [
+                  
+
+                    { "data": null, defaultContent: '' },
+                    {
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'domain',
+                        name: 'domain'
+                    },
+                    {
+                        data: 'domain_length',
+                        name: 'domain_length'
+                    },
+                    {
+                        data: 'domain_name',
+                        name: 'domain_name'
+                    },
+                    {
+                        data: 'domain_name_length',
+                        name: 'domain_name_length'
+                    },
+                    {
+                        data: 'extension',
+                        name: 'extension'
+                    },
+                    {
+                        data: 'platform',
+                        name: 'platform'
+                    },
+                    {
+                        data: 'drop_date',
+                        name: 'drop_date'
+                    },
+                
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                 
+                ],
+                columnDefs: [ {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets:   0
+                } ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                },  
+            });
+            $('#search-form').on('submit', function(e) {
+                oTable.draw();
+                e.preventDefault();
+    });
+        });
+
+
+            
+    </script>
+
+    
+
+
+
+
+    <script>
+        function deletedomain(id){
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type:'DELETE',
+                    datatype:'json',
+                    url:"/bulk_domain_delete/"+id,
+                    success:function(response){
+                    swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                ).then((result)=>{
+                    $('#data_table').DataTable().ajax.reload();
+                })
+            }
+            })
+            } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+            ) {
+            swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+            )
+            }
+            })
+        }
+
+
+    </script>
+@endsection
