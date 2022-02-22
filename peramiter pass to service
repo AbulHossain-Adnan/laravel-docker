@@ -1,0 +1,20 @@
+service er vitor method er moddhe chaile peramitter pass kora jai,
+------------------------------------------------------------------
+
+        example: public function Store($data){
+        dd($data);
+        }
+
+abar jodi amon hoi ja data er moddhe valu ashteo pare nao ashte pare sakhetre null value pass kora jai,
+------------------------------------------------------------------------------------------------------
+
+        example:
+
+        public fucntion Store($data = null){
+
+        if(!is_null($data)){
+        dd($data);
+        }
+
+}
+

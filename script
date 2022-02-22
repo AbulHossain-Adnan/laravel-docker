@@ -1,0 +1,35 @@
+
+    <script>
+        $(document).ready(function(){
+            
+        $("#myform").on('submit', function(e){
+            e.preventDefault();
+            alert('hello')
+            e.preventDefault;
+            alert('hello')
+            var form = this
+            var rowsel = oTable.column(0).select-checkbox.selected();
+            $.each(rowsel, function(index, rowId){
+                $(form).append(
+                    $('<input>').attr('type','hidden').attr('name','id[]').val(rowId)
+                )
+            })
+            $("view-rows").text(rowsel.join(","))
+            $("view-form").text($form).serialize())
+            $('input[name="id\[\]"]', form).remoove()
+            e.preventDefault()
+            })
+  
+           
+        })
+    </script>
+
+
+<script>
+   function select_all(){
+    var rowsel = oTable.column(0).select-checkbox.selected();
+    $.each(rowsel, function(index, rowId){
+               console.log(rowId)
+            })
+   }
+</script>
